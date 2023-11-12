@@ -21,7 +21,8 @@ table_exists = cur.fetchone()
 if not table_exists:
     cur.execute("""
         CREATE TABLE word (
-            name VARCHAR(255) PRIMARY KEY,
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255) ,
             word VARCHAR(255) NOT NULL,
             meaning TEXT NOT NULL,
             example_english_sentence TEXT NOT NULL,

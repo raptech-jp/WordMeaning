@@ -16,10 +16,10 @@ class Word:
         self.get_word_info(target) 
 
     def get_word_info(self, target):
-        prompt = [{'role': 'user', 'content': f"Translate the English word '{target}' to Japanese and provide an example sentence and part of speech."}]
+        prompt = [{'role': 'user', 'content': f"Translate the English word '{target}' to Japanese and provide an example sentence and part of speech. Only example sentences and parts of speech must be provided in English."}]
 
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-3.5-turbo-1106",
             messages=prompt,
             temperature=0.5,
             functions=[
@@ -42,12 +42,15 @@ class Word:
                                 "description": "Part of speech."
                             }
                         }
-                    }
+                    },
+                    "required": ["meaning", "example_english_sentence", "part_of_speech"],
                 }
             ]
         )
         res = response["choices"][0]["message"]["function_call"]["arguments"]
         data = json.loads(res)
+        
+        print(data)
 
         self.meaning = data["meaning"]
         self.example_english_sentence = data["example_english_sentence"]
