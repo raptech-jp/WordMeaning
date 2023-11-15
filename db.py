@@ -59,17 +59,14 @@ def main():
 
             translated = Word(word)
             insert_word(cur, translated, name)
-
-            cur.execute("SELECT word, meaning, example_english_sentence, part_of_speech FROM word WHERE name=%s", (name,))
-            cur.fetchall()
-            conn.commit()
-
+            
     except KeyboardInterrupt:
         print("Program terminated.")
         sys.exit()
 
     finally:
         cur.close()
+        conn.commit()
         conn.close()
 
 if __name__ == "__main__":
